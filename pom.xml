@@ -1,39 +1,60 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.itt</groupId>
     <artifactId>secure-jersey</artifactId>
-    <packaging>war</packaging>
     <version>0.1-SNAPSHOT</version>
     <name>secure-jersey Jersey Webapp</name>
+    <packaging>war</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <jersey.version>2.13</jersey.version>
+        <jetty-maven-plugin.version>9.2.2.v20140723</jetty-maven-plugin.version>
+        <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
+    </properties>
+
     <build>
         <finalName>secure-jersey</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
                 <inherited>true</inherited>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.glassfish</groupId>
-                <artifactId>maven-glassfish-plugin</artifactId>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
+            <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-server</artifactId>
-            <version>${jersey-version}</version>
+            <version>${jersey.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>${jersey-version}</version>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>2.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-sse</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>${jetty-maven-plugin.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -41,28 +62,8 @@
             <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>${jersey-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.distributions</groupId>
-            <artifactId>web-all</artifactId>
-            <version>10.0-build-20080430</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.embedded</groupId>
-            <artifactId>gf-embedded-api</artifactId>
-            <version>1.0-alpha-4</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
-    <properties>
-        <jersey-version>1.8</jersey-version>
-    </properties>
+
     <repositories>
         <repository>
             <id>glassfish.java.net</id>
@@ -75,7 +76,7 @@
             <name>Java.net Maven 2 Repository</name>
             <url>http://download.java.net/maven/2</url>
             <layout>default</layout>
-        </repository>        
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -83,6 +84,6 @@
             <name>Java.net Maven 2 Repository</name>
             <url>http://download.java.net/maven/2</url>
             <layout>default</layout>
-        </pluginRepository>  
+        </pluginRepository>
     </pluginRepositories>
 </project>
