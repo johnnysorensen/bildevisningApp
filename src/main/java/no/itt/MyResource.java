@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Example resource class hosted at the URI path "/myresource"
@@ -36,12 +37,20 @@ public class MyResource {
             try (EventOutput ignored = eventOutput) {
                 for (int i = 0; i < 10; i++) {
                     // ... code that waits 1 second
-                    Thread.sleep(1000L);
+                    Thread.sleep(5000L);
                     final OutboundEvent.Builder eventBuilder = new OutboundEvent.Builder();
-                    eventBuilder.name("message-to-client");
-                    eventBuilder.data(String.class, "Hello world " + i + "!");
+                    eventBuilder.name("klock");
+                    eventBuilder.data(String.class, String.valueOf(new Date().getTime()));
                     final OutboundEvent event = eventBuilder.build();
                     eventOutput.write(event);
+/*
+                    final OutboundEvent.Builder klockEventBuilder = new OutboundEvent.Builder();
+                    klockEventBuilder.name("klock");
+                    klockEventBuilder.data(Date.class, new Date());
+                    final OutboundEvent klockEvent = klockEventBuilder.build();
+
+                    eventOutput.write(klockEvent);
+*/
                 }
             } catch (IOException e) {
                 throw new RuntimeException("Error when writing the event.", e);
