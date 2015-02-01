@@ -14,4 +14,18 @@ angular.module('yoJaxrsTutorialApp')
       'AngularJS',
       'Karma'
     ];
+
+    //$scope.hi = $resource('rest/sse').get();
+    $scope.url = 'images/yeoman.png';
+
+    // handles the callback from the received event
+    var handleCallback = function (msg) {
+      $scope.$apply(function () {
+        $scope.url = msg.data;
+      });
+    };
+
+    var source = new EventSource('rest/sse');
+    source.addEventListener('image', handleCallback, false);
+
   });

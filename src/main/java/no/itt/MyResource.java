@@ -1,4 +1,3 @@
-
 package no.itt;
 
 import org.glassfish.jersey.media.sse.EventOutput;
@@ -9,13 +8,26 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Example resource class hosted at the URI path "/myresource"
  */
 @Path("/")
 public class MyResource {
+
+    private static final List<String> bildeUrlListe = Arrays.asList(
+            "images/Chrysanthemum.jpg",
+            "images/Desert.jpg",
+            "images/Hydrangeas.jpg",
+            "images/Jellyfish.jpg",
+            "images/Koala.jpg",
+            "images/Lighthouse.jpg",
+            "images/Penguins.jpg",
+            "images/Tulips.jpg"
+    );
     
     /** Method processing HTTP GET requests, producing "text/plain" MIME media
      * type.
@@ -35,22 +47,21 @@ public class MyResource {
         final EventOutput eventOutput = new EventOutput();
         new Thread(() -> {
             try (EventOutput ignored = eventOutput) {
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 100; i++) {
                     // ... code that waits 1 second
                     Thread.sleep(5000L);
-                    final OutboundEvent.Builder eventBuilder = new OutboundEvent.Builder();
-                    eventBuilder.name("klock");
-                    eventBuilder.data(String.class, String.valueOf(new Date().getTime()));
-                    final OutboundEvent event = eventBuilder.build();
+                    final OutboundEvent.Builder klockBuilder = new OutboundEvent.Builder();
+                    klockBuilder.name("klock");
+                    klockBuilder.data(String.class, String.valueOf(new Date().getTime()));
+                    final OutboundEvent event = klockBuilder.build();
                     eventOutput.write(event);
-/*
-                    final OutboundEvent.Builder klockEventBuilder = new OutboundEvent.Builder();
-                    klockEventBuilder.name("klock");
-                    klockEventBuilder.data(Date.class, new Date());
-                    final OutboundEvent klockEvent = klockEventBuilder.build();
 
-                    eventOutput.write(klockEvent);
-*/
+                    final OutboundEvent.Builder imageUrlBuilder = new OutboundEvent.Builder();
+                    imageUrlBuilder.name("image");
+                    imageUrlBuilder.data(bildeUrlListe.get(i % 7));
+                    final OutboundEvent imageUrlEvent = imageUrlBuilder.build();
+
+                    eventOutput.write(imageUrlEvent);
                 }
             } catch (IOException e) {
                 throw new RuntimeException("Error when writing the event.", e);
