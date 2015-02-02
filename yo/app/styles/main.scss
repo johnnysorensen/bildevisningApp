@@ -91,7 +91,35 @@ body {
   }
 }
 
-.lead img {
-  width: 200px;
-  height: 200px;
+img.thumbnail.ng-move,
+img.thumbnail.ng-enter,
+img.thumbnail.ng-leave {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+img.thumbnail.ng-leave.ng-leave-active,
+img.thumbnail.ng-move,
+img.thumbnail.ng-enter {
+  opacity:0;
+//  max-height:0;
+}
+
+img.thumbnail.ng-leave,
+img.thumbnail.ng-move.ng-move-active,
+img.thumbnail.ng-enter.ng-enter-active {
+  opacity:1;
+//  max-height:40px;
+}
+
+.film {
+  float: right;
+  max-height: 350px;
+  overflow: hidden;
+}
+img.thumbnail {
+  height: 100px;
+}
+img.large {
+  height: 350px;
+  float: left;
 }

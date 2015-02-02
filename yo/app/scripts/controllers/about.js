@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name yoJaxrsTutorialApp.controller:AboutCtrl
+ * @name bildevisningApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the yoJaxrsTutorialApp
+ * Controller of the bildevisningApp
  */
-angular.module('yoJaxrsTutorialApp')
+angular.module('bildevisningApp')
   .controller('AboutCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',

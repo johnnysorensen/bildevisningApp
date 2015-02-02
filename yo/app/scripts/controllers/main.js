@@ -2,26 +2,28 @@
 
 /**
  * @ngdoc function
- * @name yoJaxrsTutorialApp.controller:MainCtrl
+ * @name bildevisningApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the yoJaxrsTutorialApp
+ * Controller of the bildevisningApp
  */
-angular.module('yoJaxrsTutorialApp')
+angular.module('bildevisningApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
 
     //$scope.hi = $resource('rest/sse').get();
-    $scope.url = 'images/yeoman.png';
+    var currentImage = 'images/yeoman.png';
+    $scope.url = currentImage;
+    $scope.bilder = [];
 
     // handles the callback from the received event
     var handleCallback = function (msg) {
       $scope.$apply(function () {
-        $scope.url = msg.data;
+        $scope.url = msg.data
+        $scope.bilder.unshift(currentImage);
+        currentImage = msg.data;
+        if ($scope.bilder.length > 3) {
+          $scope.bilder.pop();
+        }
       });
     };
 

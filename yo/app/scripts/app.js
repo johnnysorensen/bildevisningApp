@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name yoJaxrsTutorialApp
+ * @name bildevisningApp
  * @description
- * # yoJaxrsTutorialApp
+ * # bildevisningApp
  *
  * Main module of the application.
  */
 angular
-  .module('yoJaxrsTutorialApp', [
+  .module('bildevisningApp', [
     'ngAnimate',
     'ngAria',
     'ngCookies',
