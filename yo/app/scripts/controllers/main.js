@@ -18,10 +18,10 @@ angular.module('bildevisningApp')
     // handles the callback from the received event
     var handleCallback = function (msg) {
       $scope.$apply(function () {
-        $scope.url = msg.data
+        $scope.url = msg.data;
         $scope.bilder.unshift(currentImage);
         currentImage = msg.data;
-        if ($scope.bilder.length > 3) {
+        if ($scope.bilder.length > 4) {
           $scope.bilder.pop();
         }
       });

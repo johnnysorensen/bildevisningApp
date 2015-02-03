@@ -97,29 +97,32 @@ img.thumbnail.ng-leave {
   -webkit-transition:all linear 0.5s;
   transition:all linear 0.5s;
 }
-img.thumbnail.ng-leave.ng-leave-active,
+//img.thumbnail.ng-leave.ng-leave-active,
 img.thumbnail.ng-move,
 img.thumbnail.ng-enter {
   opacity:0;
+  height: 0;
 //  max-height:0;
 }
 
-img.thumbnail.ng-leave,
+//img.thumbnail.ng-leave,
 img.thumbnail.ng-move.ng-move-active,
 img.thumbnail.ng-enter.ng-enter-active {
   opacity:1;
+  height: 100px;
 //  max-height:40px;
 }
 
 .film {
   float: right;
-  max-height: 350px;
+  max-height: 420px;
   overflow: hidden;
 }
 img.thumbnail {
   height: 100px;
+  margin-bottom: 5px;
 }
 img.large {
-  height: 350px;
+  height: 416px;
   float: left;
 }
