@@ -10,20 +10,34 @@
 angular.module('bildevisningApp')
   .controller('MainCtrl', function ($scope) {
 
+    $scope.selectBag = function () {
+
+    };
+
     //$scope.hi = $resource('rest/sse').get();
-    var currentImage = 'images/yeoman.png';
-    $scope.url = currentImage;
+    var currentImage = 'Desert.jpg';
+    $scope.url = 'currentImage';
     $scope.bilder = [];
+    $scope.film = [];
+    var nyttBilde, overflow;
+    var i = 0;
 
     // handles the callback from the received event
     var handleCallback = function (msg) {
       $scope.$apply(function () {
-        $scope.url = msg.data;
-        $scope.bilder.unshift(currentImage);
-        currentImage = msg.data;
-        if ($scope.bilder.length > 4) {
-          $scope.bilder.pop();
+        nyttBilde = {url: msg.data, idx: ++i};
+        $scope.bilder.unshift(nyttBilde);
+        if ($scope.bilder.length > 2) {
+          overflow = $scope.bilder.pop();
         }
+
+        if (overflow) {
+          $scope.film.unshift(overflow);
+          if ($scope.film.length > 7) {
+            $scope.film.pop();
+          }
+        }
+        console.log($scope.film.length);
       });
     };
 

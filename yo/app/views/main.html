@@ -1,7 +1,10 @@
-<div>
-  <div class="film">
-    <img ng-repeat="bildeurl in bilder" class="thumbnail" src="{{bildeurl}}">
+<div class="visning">
+  <div class="bilder">
+    <img ng-repeat="bilde in bilder track by bilde.idx" class="store" src="{{bilde.url}}">
   </div>
-  <img class="large" src="{{url}}">
+  <div class="film">
+    <img ng-repeat="bilde in film track by bilde.idx"
+         ng-click="selectBag()" class="thumbnail" src="{{bilde.url}}">
+  </div>
 </div>
 
