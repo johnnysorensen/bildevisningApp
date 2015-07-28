@@ -15,8 +15,7 @@ angular.module('bildevisningApp')
     };
 
     //$scope.hi = $resource('rest/sse').get();
-    var currentImage = 'Desert.jpg';
-    $scope.url = 'currentImage';
+    $scope.url = '';
     $scope.bilder = [];
     $scope.film = [];
     var nyttBilde, overflow;

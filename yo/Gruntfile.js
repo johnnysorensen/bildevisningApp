@@ -67,12 +67,12 @@ module.exports = function (grunt) {
 
     // The actual grunt server settings
     connect: {
-      // Proxy requests starting with /webresources to the server on port 8080
+      // Proxy requests starting with /webresources to the server on port 8888
       proxies: [
         {
           context: '/rest',
           host: 'localhost',
-          port: 8080,
+          port: 8888,
           https: false,
           changeOrigin: false
         }
@@ -327,7 +327,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '.tmp/concat/scripts',
-          src: ['*.js', '!oldieshim.js'],
+          src: ['*.js', '!oldieshim.js', '!vendor.js'],
           dest: '.tmp/concat/scripts'
         }]
       }
@@ -378,17 +378,9 @@ module.exports = function (grunt) {
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
-      server: [
-        'compass:server'
-      ],
-      test: [
-        'compass'
-      ],
-      dist: [
-        'compass:dist',
-        'imagemin',
-        'svgmin'
-      ]
+      server: [],
+      test: [],
+      dist: []
     },
 
     // Test settings

@@ -45,30 +45,33 @@ public class MyResource {
     @Produces(SseFeature.SERVER_SENT_EVENTS)
     public EventOutput getServerSentEvents() {
         final EventOutput eventOutput = new EventOutput();
-        new Thread(() -> {
-            try (EventOutput ignored = eventOutput) {
-                for (int i = 0; i < 100; i++) {
-                    // ... code that waits 1 second
-                    Thread.sleep(5000L);
-                    final OutboundEvent.Builder klockBuilder = new OutboundEvent.Builder();
-                    klockBuilder.name("klock");
-                    klockBuilder.data(String.class, String.valueOf(new Date().getTime()));
-                    final OutboundEvent event = klockBuilder.build();
-                    eventOutput.write(event);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try (EventOutput ignored = eventOutput) {
+                    for (int i = 0; i < 100; i++) {
+                        // ... code that waits 1 second
+                        Thread.sleep(5000L);
+                        final OutboundEvent.Builder klockBuilder = new OutboundEvent.Builder();
+                        klockBuilder.name("klock");
+                        klockBuilder.data(String.class, String.valueOf(new Date().getTime()));
+                        final OutboundEvent event = klockBuilder.build();
+                        eventOutput.write(event);
 
-                    final OutboundEvent.Builder imageUrlBuilder = new OutboundEvent.Builder();
-                    imageUrlBuilder.name("image");
-                    imageUrlBuilder.data(bildeUrlListe.get(i % 7));
-                    final OutboundEvent imageUrlEvent = imageUrlBuilder.build();
+                        final OutboundEvent.Builder imageUrlBuilder = new OutboundEvent.Builder();
+                        imageUrlBuilder.name("image");
+                        imageUrlBuilder.data(bildeUrlListe.get(i % 7));
+                        final OutboundEvent imageUrlEvent = imageUrlBuilder.build();
 
-                    eventOutput.write(imageUrlEvent);
+                        eventOutput.write(imageUrlEvent);
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException("Error when writing the event.", e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException("Interrupted!", e);
+                } finally {
+                    System.out.println("eventOutput.isClosed() = " + eventOutput.isClosed());
                 }
-            } catch (IOException e) {
-                throw new RuntimeException("Error when writing the event.", e);
-            } catch (InterruptedException e) {
-                throw new RuntimeException("Interrupted!", e);
-            } finally {
-                System.out.println("eventOutput.isClosed() = " + eventOutput.isClosed());
             }
         }).start();
         System.out.println("When returned: eventOutput.isClosed() = " + eventOutput.isClosed());
